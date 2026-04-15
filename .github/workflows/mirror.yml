@@ -1,0 +1,30 @@
+name: Mirror Sitio Web
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'URL del sitio'
+        required: true
+        default: 'https://cbt3otzolotepec.dpdns.org'
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Descargar sitio
+        run: |
+          wget --recursive --level=inf --page-requisites \
+            --adjust-extension --convert-links --no-clobber \
+            --wait=1 --timeout=30 --tries=3 \
+            --no-check-certificate \
+            --directory-prefix=./sitio \
+            "${{ github.event.inputs.url }}" || true
+      - name: Commit y Push
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git diff --staged --quiet || git commit -m "Mirror actualizado"
+          git push
