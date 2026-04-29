@@ -16,7 +16,7 @@ jobs:
       - name: Descargar sitio
         run: |
           wget --recursive --level=inf --page-requisites \
-            --adjust-extension --convert-links --no-clobber \
+            --adjust-extension --convert-links \
             --wait=1 --timeout=30 --tries=3 \
             --no-check-certificate \
             --directory-prefix=./sitio \
