@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cbt3otzolotepec.dpdns.org/_html4life/sitemap.xml
